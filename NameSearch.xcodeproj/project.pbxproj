@@ -31,6 +31,7 @@
 		E830F21726A79BB900A6FD19 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21626A79BB900A6FD19 /* UserManager.swift */; };
 		E830F21A26A7A2A000A6FD19 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21926A7A2A000A6FD19 /* CustomError.swift */; };
 		E830F21C26A7B61900A6FD19 /* _LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21B26A7B61900A6FD19 /* _LoginViewController.swift */; };
+		E830F21E26A7C8E200A6FD19 /* _DomainSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21D26A7C8E200A6FD19 /* _DomainSearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		E830F21626A79BB900A6FD19 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		E830F21926A7A2A000A6FD19 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		E830F21B26A7B61900A6FD19 /* _LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _LoginViewController.swift; sourceTree = "<group>"; };
+		E830F21D26A7C8E200A6FD19 /* _DomainSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _DomainSearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				BC0E11622502F6E1007560B1 /* DomainSearchViewController.swift */,
+				E830F21D26A7C8E200A6FD19 /* _DomainSearchViewController.swift */,
 				BC0E11922503267C007560B1 /* CartViewController.swift */,
 				BCCC5E03250698C800AC95C0 /* PaymentMethodsViewController.swift */,
 				BCCC5DF92506931B00AC95C0 /* LoginViewController.swift */,
@@ -371,6 +374,7 @@
 				BCCC5E082506990E00AC95C0 /* PaymentMethod.swift in Sources */,
 				BCCC5E04250698C800AC95C0 /* PaymentMethodsViewController.swift in Sources */,
 				BC0E118F25030062007560B1 /* DomainSearchResponseTypes.swift in Sources */,
+				E830F21E26A7C8E200A6FD19 /* _DomainSearchViewController.swift in Sources */,
 				BC0E11932503267C007560B1 /* CartViewController.swift in Sources */,
 				BCCC5DFE2506967000AC95C0 /* User.swift in Sources */,
 				BC0E11612502F6E1007560B1 /* SceneDelegate.swift in Sources */,
