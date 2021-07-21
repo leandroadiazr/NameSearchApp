@@ -32,6 +32,8 @@
 		E830F21A26A7A2A000A6FD19 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21926A7A2A000A6FD19 /* CustomError.swift */; };
 		E830F21C26A7B61900A6FD19 /* _LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21B26A7B61900A6FD19 /* _LoginViewController.swift */; };
 		E830F21E26A7C8E200A6FD19 /* _DomainSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21D26A7C8E200A6FD19 /* _DomainSearchViewController.swift */; };
+		E830F22026A7C95F00A6FD19 /* Domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21F26A7C95F00A6FD19 /* Domain.swift */; };
+		E830F22226A7CC7B00A6FD19 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F22126A7CC7B00A6FD19 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +85,8 @@
 		E830F21926A7A2A000A6FD19 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		E830F21B26A7B61900A6FD19 /* _LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _LoginViewController.swift; sourceTree = "<group>"; };
 		E830F21D26A7C8E200A6FD19 /* _DomainSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _DomainSearchViewController.swift; sourceTree = "<group>"; };
+		E830F21F26A7C95F00A6FD19 /* Domain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Domain.swift; sourceTree = "<group>"; };
+		E830F22126A7CC7B00A6FD19 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,10 +185,10 @@
 			isa = PBXGroup;
 			children = (
 				BC0E11622502F6E1007560B1 /* DomainSearchViewController.swift */,
-				E830F21D26A7C8E200A6FD19 /* _DomainSearchViewController.swift */,
 				BC0E11922503267C007560B1 /* CartViewController.swift */,
 				BCCC5E03250698C800AC95C0 /* PaymentMethodsViewController.swift */,
 				BCCC5DF92506931B00AC95C0 /* LoginViewController.swift */,
+				E830F21D26A7C8E200A6FD19 /* _DomainSearchViewController.swift */,
 				E830F21B26A7B61900A6FD19 /* _LoginViewController.swift */,
 			);
 			path = Controllers;
@@ -207,6 +211,7 @@
 				BCCC5DFD2506967000AC95C0 /* User.swift */,
 				BCCC5DFF2506968F00AC95C0 /* Auth.swift */,
 				BCCC5E072506990E00AC95C0 /* PaymentMethod.swift */,
+				E830F21F26A7C95F00A6FD19 /* Domain.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -215,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				E830F21626A79BB900A6FD19 /* UserManager.swift */,
+				E830F22126A7CC7B00A6FD19 /* NetworkManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -362,6 +368,7 @@
 				BC0E11962503BD21007560B1 /* CartItemTableViewCell.swift in Sources */,
 				BCCC5DFC2506963000AC95C0 /* AuthManager.swift in Sources */,
 				E830F21A26A7A2A000A6FD19 /* CustomError.swift in Sources */,
+				E830F22226A7CC7B00A6FD19 /* NetworkManager.swift in Sources */,
 				BCCC5E02250696C000AC95C0 /* LoginResponse.swift in Sources */,
 				BC0E1191250319F5007560B1 /* ShoppingCart.swift in Sources */,
 				E830F21726A79BB900A6FD19 /* UserManager.swift in Sources */,
@@ -370,6 +377,7 @@
 				E830F21C26A7B61900A6FD19 /* _LoginViewController.swift in Sources */,
 				BCCC5DFA2506931B00AC95C0 /* LoginViewController.swift in Sources */,
 				BCCC5E002506968F00AC95C0 /* Auth.swift in Sources */,
+				E830F22026A7C95F00A6FD19 /* Domain.swift in Sources */,
 				BCCC5E06250698E500AC95C0 /* PaymentsManager.swift in Sources */,
 				BCCC5E082506990E00AC95C0 /* PaymentMethod.swift in Sources */,
 				BCCC5E04250698C800AC95C0 /* PaymentMethodsViewController.swift in Sources */,
