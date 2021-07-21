@@ -36,7 +36,6 @@ class UserManager {
             }
             
             guard let result = response as? HTTPURLResponse, result.statusCode == 200 else {
-    
                 completion(.failure(.invalid))
                 return }
             
