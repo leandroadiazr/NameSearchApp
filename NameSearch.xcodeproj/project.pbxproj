@@ -34,6 +34,7 @@
 		E830F21E26A7C8E200A6FD19 /* _DomainSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21D26A7C8E200A6FD19 /* _DomainSearchViewController.swift */; };
 		E830F22026A7C95F00A6FD19 /* Domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21F26A7C95F00A6FD19 /* Domain.swift */; };
 		E830F22226A7CC7B00A6FD19 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F22126A7CC7B00A6FD19 /* NetworkManager.swift */; };
+		E8EC06B226A8B61500F3E3D6 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EC06B126A8B61500F3E3D6 /* UIViewExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		E830F21D26A7C8E200A6FD19 /* _DomainSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _DomainSearchViewController.swift; sourceTree = "<group>"; };
 		E830F21F26A7C95F00A6FD19 /* Domain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Domain.swift; sourceTree = "<group>"; };
 		E830F22126A7CC7B00A6FD19 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		E8EC06B126A8B61500F3E3D6 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				E830F21926A7A2A000A6FD19 /* CustomError.swift */,
+				E8EC06B126A8B61500F3E3D6 /* UIViewExtensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8EC06B226A8B61500F3E3D6 /* UIViewExtensions.swift in Sources */,
 				BC0E11962503BD21007560B1 /* CartItemTableViewCell.swift in Sources */,
 				BCCC5DFC2506963000AC95C0 /* AuthManager.swift in Sources */,
 				E830F21A26A7A2A000A6FD19 /* CustomError.swift in Sources */,

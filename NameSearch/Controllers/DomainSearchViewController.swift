@@ -1,7 +1,5 @@
-import Foundation
+
 import UIKit
-
-
 
 class DomainSearchViewController: UIViewController {
     
@@ -9,33 +7,27 @@ class DomainSearchViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var cartButton: UIButton!
     let exactURL  = "https://gd.proxied.io/search/exact"
-    let sugestURL = "https://gd.proxied.io/search/spins"
+    let sugestedURL = "https://gd.proxied.io/search/spins"
     let networkManager = NetworkManager.shared
-    
+  
     var isSearchEntered: Bool { return !searchTermsTextField.text!.isEmpty }
     
     @IBAction func searchButtonTapped(_ sender: UIButton) {
         guard isSearchEntered else {
-            let alert = UIAlertController(title: "Empty Field", message: "Please check your input..." , preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            DispatchQueue.main.async {
-                self.present(alert, animated: true, completion: nil)
-            }
+            showCustomAlert(title: "Empty Field", message: "Please check your input...", actionTitle: "Ok")
             return
         }
-        searchTermsTextField.resignFirstResponder()
-        loadData()
+        if let searchTerms = searchTermsTextField.text {
+            searchTermsTextField.resignFirstResponder()
+            loadData(with: searchTerms)
+        }
     }
     
     @IBAction func cartButtonTapped(_ sender: UIButton) {
         
     }
-    
-    
-    var retreivedDomain: Domain?
-    var recomendedationDomain : [Domain] = []
-    var data: [Domain]?
+
+    var data: [Domain] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +36,6 @@ class DomainSearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         tableView.reloadData()
     }
     
@@ -56,110 +47,113 @@ class DomainSearchViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
     
-    func loadData() {
-        guard let searchTerms = searchTermsTextField.text else {
-            return
-        }
-        
-        //MARK:- EXACT RESULTS
-        networkManager.getDomains(for: searchTerms, withUrl: exactURL, for: DomainSearchExactMatchResponse.self) { exactResults in
-            switch exactResults {
-            case .success(let exactMatchResponse):
-                guard let exactDomainPriceInfo = exactMatchResponse?.products.first(where: { $0.productId == exactMatchResponse?.domain.productId })?.priceInfo else { return }
-                guard let domain = exactMatchResponse?.domain else {
-                    return
-                }
-                
-                self.retreivedDomain = Domain(name: domain.fqdn, price: exactDomainPriceInfo.currentPriceDisplay, productId: domain.productId)
-            case .failure(let error):
-                //manage error
-                print(error.rawValue)
-                break
-            }
-        }
-        
-        //MARK:- SUGESTIONS
-        networkManager.getDomains(for: searchTerms, withUrl: exactURL, for: DomainSearchRecommendedResponse.self) { recomendedResults in
-            switch recomendedResults {
-            case .success(let recomended):
-                
-                guard let recomendedPriceInfo = recomended?.products.first(where: { $0.productId == recomended?.domains.first?.productId })?.priceInfo else { return }
-                
-                guard let recomendedDomains = recomended?.domains else { return }
-                
-                for domain in recomendedDomains {
-                    let result = Domain(name: domain.fqdn, price: recomendedPriceInfo.currentPriceDisplay, productId: domain.productId)
-                    self.recomendedationDomain.append(result)
-                }
+    private func loadData(with searchTerms: String) {
+        let dispatchGroup = DispatchGroup()
 
-            case .failure(let error):
-                print(error.rawValue)
-                break
-                
-            }
-        }
-        
-        
-        
-        
-        
-        let session = URLSession(configuration: .default)
-        
-        var urlComponents = URLComponents(string: "https://gd.proxied.io/search/exact")!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "q", value: searchTerms)
-        ]
-        
-        var request = URLRequest(url: urlComponents.url!)
-        request.httpMethod = "GET"
-        
-        let task = session.dataTask(with: request) { (data, response, error) in
-            guard error == nil else { return }
-            
-            if let data = data {
-                let exactMatchResponse = try! JSONDecoder().decode(DomainSearchExactMatchResponse.self, from: data)
-                
-                var suggestionsComponents = URLComponents(string: "https://gd.proxied.io/search/spins")!
-                suggestionsComponents.queryItems = [
-                    URLQueryItem(name: "q", value: searchTerms)
-                ]
-                
-                var suggestionsRequest = URLRequest(url: suggestionsComponents.url!)
-                suggestionsRequest.httpMethod = "GET"
-                
-                let suggestionsTask = session.dataTask(with: suggestionsRequest) { (suggestionsData, suggestionsResponse, suggestionsError) in
-                    guard error == nil else { return }
+            //MARK:- EXACT RESULTS
+        dispatchGroup.enter()
+            networkManager.getDomains(for: searchTerms, withUrl: exactURL, for: DomainSearchExactMatchResponse.self) { [weak self] exactResults in
+                guard let self = self else {return}
+                switch exactResults {
+                case .success(let exactMatchResponse):
+                    guard let exactDomainPriceInfo = exactMatchResponse?.products.first(where: { $0.productId == exactMatchResponse?.domain.productId })?.priceInfo else { return }
+                    guard let domain = exactMatchResponse?.domain else { return }
                     
-                    if let suggestionsData = suggestionsData {
-                        let suggestionsResponse = try! JSONDecoder().decode(DomainSearchRecommendedResponse.self, from: suggestionsData)
-                        
-                        let exactDomainPriceInfo = exactMatchResponse.products.first(where: { $0.productId == exactMatchResponse.domain.productId })!.priceInfo
-                        let exactDomain = Domain(name: exactMatchResponse.domain.fqdn,
-                                                 price: exactDomainPriceInfo.currentPriceDisplay,
-                                                 productId: exactMatchResponse.domain.productId)
-                        
-                        let suggestionDomains = suggestionsResponse.domains.map { domain -> Domain in
-                            let priceInfo = suggestionsResponse.products.first(where: { price in
-                                price.productId == domain.productId
-                            })!.priceInfo
-                            
-                            return Domain(name: domain.fqdn, price: priceInfo.currentPriceDisplay, productId: domain.productId)
-                        }
-                        
-                        self.data = [exactDomain] + suggestionDomains
-                        print(self.data)
-                        
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
-                    }
+                    let result = Domain(name: domain.fqdn, price: exactDomainPriceInfo.currentPriceDisplay, productId: domain.productId)
+                    self.data.append(result)
+                case .failure(let error):
+                    self.showCustomAlert(title: "Error Occurred", message: error.rawValue, actionTitle: "Ok")
+                    print(error.rawValue)
+                    break
                 }
-                
-                suggestionsTask.resume()
+                dispatchGroup.leave()
+            }
+            
+            //MARK:- SUGESTIONS
+            dispatchGroup.enter()
+            networkManager.getDomains(for: searchTerms, withUrl: sugestedURL, for: DomainSearchRecommendedResponse.self) { [weak self] recomendedResults in
+                guard let self = self else {return}
+                switch recomendedResults {
+                case .success(let recomended):
+                    guard let recomendedPriceInfo = recomended?.products.first(where: { $0.productId == recomended?.domains.first?.productId })?.priceInfo else { return }
+                    guard let recomendedDomains = recomended?.domains else { return }
+
+                    for domain in recomendedDomains {
+                        let result = Domain(name: domain.fqdn, price: recomendedPriceInfo.currentPriceDisplay, productId: domain.productId)
+                        self.data.append(result)
+                    }
+                case .failure(let error):
+                    self.showCustomAlert(title: "Error Occurred", message: error.rawValue, actionTitle: "Ok")
+                    break
+                }
+                dispatchGroup.leave()
+            }
+  
+        dispatchGroup.notify(queue: .main) {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
+       
         
-        task.resume()
+//
+//        let session = URLSession(configuration: .default)
+//
+//        var urlComponents = URLComponents(string: "https://gd.proxied.io/search/exact")!
+//        urlComponents.queryItems = [
+//            URLQueryItem(name: "q", value: searchTerms)
+//        ]
+//
+//        var request = URLRequest(url: urlComponents.url!)
+//        request.httpMethod = "GET"
+//
+//        let task = session.dataTask(with: request) { (data, response, error) in
+//            guard error == nil else { return }
+//
+//            if let data = data {
+//                let exactMatchResponse = try! JSONDecoder().decode(DomainSearchExactMatchResponse.self, from: data)
+//
+//                var suggestionsComponents = URLComponents(string: "https://gd.proxied.io/search/spins")!
+//                suggestionsComponents.queryItems = [
+//                    URLQueryItem(name: "q", value: searchTerms)
+//                ]
+//
+//                var suggestionsRequest = URLRequest(url: suggestionsComponents.url!)
+//                suggestionsRequest.httpMethod = "GET"
+//
+//                let suggestionsTask = session.dataTask(with: suggestionsRequest) { (suggestionsData, suggestionsResponse, suggestionsError) in
+//                    guard error == nil else { return }
+//
+//                    if let suggestionsData = suggestionsData {
+//                        let suggestionsResponse = try! JSONDecoder().decode(DomainSearchRecommendedResponse.self, from: suggestionsData)
+//
+//                        let exactDomainPriceInfo = exactMatchResponse.products.first(where: { $0.productId == exactMatchResponse.domain.productId })!.priceInfo
+//                        let exactDomain = Domain(name: exactMatchResponse.domain.fqdn,
+//                                                 price: exactDomainPriceInfo.currentPriceDisplay,
+//                                                 productId: exactMatchResponse.domain.productId)
+//
+//                        let suggestionDomains = suggestionsResponse.domains.map { domain -> Domain in
+//                            let priceInfo = suggestionsResponse.products.first(where: { price in
+//                                price.productId == domain.productId
+//                            })!.priceInfo
+//
+//                            return Domain(name: domain.fqdn, price: priceInfo.currentPriceDisplay, productId: domain.productId)
+//                        }
+//
+//                        self.data = [exactDomain] + suggestionDomains
+//                        print(self.data)
+//
+//                        DispatchQueue.main.async {
+//                            self.tableView.reloadData()
+//                        }
+//                    }
+//                }
+                
+//                suggestionsTask.resume()
+//            }
+//        }
+//
+//        task.resume()
     }
     
     private func configureCartButton() {
@@ -168,43 +162,35 @@ class DomainSearchViewController: UIViewController {
     }
 }
 
-extension DomainSearchViewController: UITableViewDataSource {
+extension DomainSearchViewController: UITableViewDataSource, UITableViewDelegate  {
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
+        let item = data[indexPath.row]
         
-        cell.textLabel!.text = data![indexPath.row].name
-        cell.detailTextLabel!.text = data![indexPath.row].price
+        cell.textLabel!.text = item.name
+        cell.detailTextLabel!.text = item.price
         
-        let selected = ShoppingCart.shared.domains.contains(where: { $0.name == data![indexPath.row].name })
-        
+        let selected = ShoppingCart.shared.domains.contains(where: { $0.name == data[indexPath.row].name })
         DispatchQueue.main.async {
             cell.setSelected(selected, animated: true)
         }
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data?.count ?? 0
+        return data.count
     }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-}
 
-extension DomainSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let domain = data![indexPath.row]
+        let domain = data[indexPath.row]
         ShoppingCart.shared.domains.append(domain)
-        
         configureCartButton()
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let domain = data![indexPath.row]
+        let domain = data[indexPath.row]
         ShoppingCart.shared.domains = ShoppingCart.shared.domains.filter { $0.name != domain.name }
-        
         configureCartButton()
     }
 }
