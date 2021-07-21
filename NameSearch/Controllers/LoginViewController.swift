@@ -3,12 +3,13 @@ import UIKit
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     let userManager = UserManager.shared
+    let userUrlString = "https://gd.proxied.io/auth/login"
+    var loginResponse: LoginResponse?
     @IBOutlet var usernameTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
     
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
-        
         guard !usernameTextField.text!.isEmpty else {
             print("empty user name")
             return
@@ -24,41 +25,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        var request = URLRequest(url: URL(string: "https://gd.proxied.io/auth/login")!)
-        request.httpMethod = "POST"
-        
         let user: [String: String] = [
             "username": username,
             "password": password
         ]
         
-                authenticateUser(user: user)
-        
-//        request.httpBody = try! JSONSerialization.data(withJSONObject: user, options: .fragmentsAllowed)
-//        
-//        let session = URLSession(configuration: .default)
-//        let task = session.dataTask(with: request) { (data, response, error) in
-//            guard error == nil else {
-//                return
-//            }
-//            
-//            let authReponse = try! JSONDecoder().decode(LoginResponse.self, from: data!)
-//            
-//            
-//            AuthManager.shared.user = authReponse.user
-//            AuthManager.shared.token = authReponse.auth.token
-//            
-//            DispatchQueue.main.async {
-//                self.performSegue(withIdentifier: "showDomainSearch", sender: self)
-//            }
-//        }
-//        
-//        task.resume()
+        authenticateUser(user: user, urlString: userUrlString)
     }
     
-    private func authenticateUser(user: [String: String]) {
-        
-        userManager.authUser(user: user) { [weak self] response  in
+    private func authenticateUser(user: [String: String], urlString: String) {
+        userManager.authProcess(with: user, withUrl: urlString, for: LoginResponse.self) { [weak self] response in
             guard let self = self else { return }
             
             switch response  {
@@ -78,7 +54,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
             }
         }
-        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

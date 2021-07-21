@@ -1,3 +1,3 @@
-struct Auth: Decodable {
+struct Auth: Codable {
     let token: String
 }

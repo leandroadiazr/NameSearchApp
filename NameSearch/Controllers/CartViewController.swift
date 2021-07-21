@@ -15,8 +15,7 @@ class CartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        tableView.register(UINib(nibName: "CartItemTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "CartItemCell")
+        configureTableView()
         updatePayButton()
     }
 
@@ -32,6 +31,10 @@ class CartViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
 
+    private func configureTableView() {
+        tableView.register(UINib(nibName: "CartItemTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "CartItemCell")
+    }
+    
     func updatePayButton() {
         if PaymentsManager.shared.selectedPaymentMethod == nil {
             payButton.setTitle("Select a Payment Method", for: .normal)
