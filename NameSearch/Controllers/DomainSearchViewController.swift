@@ -24,7 +24,6 @@ class DomainSearchViewController: UIViewController {
     }
     
     @IBAction func cartButtonTapped(_ sender: UIButton) {
-        
     }
     
     var data: [Domain] = []
