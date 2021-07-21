@@ -28,6 +28,9 @@
 		BCCC5E04250698C800AC95C0 /* PaymentMethodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC5E03250698C800AC95C0 /* PaymentMethodsViewController.swift */; };
 		BCCC5E06250698E500AC95C0 /* PaymentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC5E05250698E500AC95C0 /* PaymentsManager.swift */; };
 		BCCC5E082506990E00AC95C0 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC5E072506990E00AC95C0 /* PaymentMethod.swift */; };
+		E830F21726A79BB900A6FD19 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21626A79BB900A6FD19 /* UserManager.swift */; };
+		E830F21A26A7A2A000A6FD19 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21926A7A2A000A6FD19 /* CustomError.swift */; };
+		E830F21C26A7B61900A6FD19 /* _LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21B26A7B61900A6FD19 /* _LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +78,9 @@
 		BCCC5E03250698C800AC95C0 /* PaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsViewController.swift; sourceTree = "<group>"; };
 		BCCC5E05250698E500AC95C0 /* PaymentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsManager.swift; sourceTree = "<group>"; };
 		BCCC5E072506990E00AC95C0 /* PaymentMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethod.swift; sourceTree = "<group>"; };
+		E830F21626A79BB900A6FD19 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		E830F21926A7A2A000A6FD19 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
+		E830F21B26A7B61900A6FD19 /* _LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,26 +131,19 @@
 		BC0E115D2502F6E1007560B1 /* NameSearch */ = {
 			isa = PBXGroup;
 			children = (
-				BC0E115E2502F6E1007560B1 /* AppDelegate.swift */,
-				BC0E11602502F6E1007560B1 /* SceneDelegate.swift */,
-				BC0E11622502F6E1007560B1 /* DomainSearchViewController.swift */,
+				E830F21826A7A27C00A6FD19 /* Utilities */,
+				E830F21526A79B9A00A6FD19 /* Managers */,
+				E830F21126A798E500A6FD19 /* Support */,
+				E830F21226A7990E00A6FD19 /* Controllers */,
 				BC0E11642502F6E1007560B1 /* Main.storyboard */,
 				BC0E11672502F6E5007560B1 /* Assets.xcassets */,
 				BC0E11692502F6E5007560B1 /* LaunchScreen.storyboard */,
 				BC0E116C2502F6E5007560B1 /* Info.plist */,
-				BC0E118E25030062007560B1 /* DomainSearchResponseTypes.swift */,
 				BC0E1190250319F5007560B1 /* ShoppingCart.swift */,
-				BC0E11922503267C007560B1 /* CartViewController.swift */,
-				BC0E11942503BD21007560B1 /* CartItemTableViewCell.swift */,
-				BC0E11952503BD21007560B1 /* CartItemTableViewCell.xib */,
-				BCCC5DF92506931B00AC95C0 /* LoginViewController.swift */,
+				E830F21326A7993000A6FD19 /* Cells */,
 				BCCC5DFB2506963000AC95C0 /* AuthManager.swift */,
-				BCCC5DFD2506967000AC95C0 /* User.swift */,
-				BCCC5DFF2506968F00AC95C0 /* Auth.swift */,
-				BCCC5E01250696C000AC95C0 /* LoginResponse.swift */,
-				BCCC5E03250698C800AC95C0 /* PaymentMethodsViewController.swift */,
 				BCCC5E05250698E500AC95C0 /* PaymentsManager.swift */,
-				BCCC5E072506990E00AC95C0 /* PaymentMethod.swift */,
+				E830F21426A7996E00A6FD19 /* Model */,
 			);
 			path = NameSearch;
 			sourceTree = "<group>";
@@ -165,6 +164,64 @@
 				BC0E11822502F6E6007560B1 /* Info.plist */,
 			);
 			path = NameSearchUITests;
+			sourceTree = "<group>";
+		};
+		E830F21126A798E500A6FD19 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				BC0E115E2502F6E1007560B1 /* AppDelegate.swift */,
+				BC0E11602502F6E1007560B1 /* SceneDelegate.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		E830F21226A7990E00A6FD19 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				BC0E11622502F6E1007560B1 /* DomainSearchViewController.swift */,
+				BC0E11922503267C007560B1 /* CartViewController.swift */,
+				BCCC5E03250698C800AC95C0 /* PaymentMethodsViewController.swift */,
+				BCCC5DF92506931B00AC95C0 /* LoginViewController.swift */,
+				E830F21B26A7B61900A6FD19 /* _LoginViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		E830F21326A7993000A6FD19 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				BC0E11942503BD21007560B1 /* CartItemTableViewCell.swift */,
+				BC0E11952503BD21007560B1 /* CartItemTableViewCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		E830F21426A7996E00A6FD19 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BCCC5E01250696C000AC95C0 /* LoginResponse.swift */,
+				BC0E118E25030062007560B1 /* DomainSearchResponseTypes.swift */,
+				BCCC5DFD2506967000AC95C0 /* User.swift */,
+				BCCC5DFF2506968F00AC95C0 /* Auth.swift */,
+				BCCC5E072506990E00AC95C0 /* PaymentMethod.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E830F21526A79B9A00A6FD19 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				E830F21626A79BB900A6FD19 /* UserManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		E830F21826A7A27C00A6FD19 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				E830F21926A7A2A000A6FD19 /* CustomError.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,10 +358,13 @@
 			files = (
 				BC0E11962503BD21007560B1 /* CartItemTableViewCell.swift in Sources */,
 				BCCC5DFC2506963000AC95C0 /* AuthManager.swift in Sources */,
+				E830F21A26A7A2A000A6FD19 /* CustomError.swift in Sources */,
 				BCCC5E02250696C000AC95C0 /* LoginResponse.swift in Sources */,
 				BC0E1191250319F5007560B1 /* ShoppingCart.swift in Sources */,
+				E830F21726A79BB900A6FD19 /* UserManager.swift in Sources */,
 				BC0E11632502F6E1007560B1 /* DomainSearchViewController.swift in Sources */,
 				BC0E115F2502F6E1007560B1 /* AppDelegate.swift in Sources */,
+				E830F21C26A7B61900A6FD19 /* _LoginViewController.swift in Sources */,
 				BCCC5DFA2506931B00AC95C0 /* LoginViewController.swift in Sources */,
 				BCCC5E002506968F00AC95C0 /* Auth.swift in Sources */,
 				BCCC5E06250698E500AC95C0 /* PaymentsManager.swift in Sources */,
