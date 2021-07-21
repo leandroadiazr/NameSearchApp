@@ -9,7 +9,7 @@ class DomainSearchViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var cartButton: UIButton!
     let exactURL  = "https://gd.proxied.io/search/exact"
-    let sugestURL = "https://gd.proxied.io/search/spins"
+    let sugestedURL = "https://gd.proxied.io/search/spins"
     let networkManager = NetworkManager.shared
     
     var isSearchEntered: Bool { return !searchTermsTextField.text!.isEmpty }
@@ -33,7 +33,7 @@ class DomainSearchViewController: UIViewController {
     }
     
     
-    var retreivedDomain: Domain?
+    var retreivedDomain: [Domain] = []
     var recomendedationDomain : [Domain] = []
     var data: [Domain]?
     
@@ -61,105 +61,133 @@ class DomainSearchViewController: UIViewController {
             return
         }
         
-        //MARK:- EXACT RESULTS
-        networkManager.getDomains(for: searchTerms, withUrl: exactURL, for: DomainSearchExactMatchResponse.self) { exactResults in
-            switch exactResults {
-            case .success(let exactMatchResponse):
-                guard let exactDomainPriceInfo = exactMatchResponse?.products.first(where: { $0.productId == exactMatchResponse?.domain.productId })?.priceInfo else { return }
-                guard let domain = exactMatchResponse?.domain else {
-                    return
-                }
-                
-                self.retreivedDomain = Domain(name: domain.fqdn, price: exactDomainPriceInfo.currentPriceDisplay, productId: domain.productId)
-            case .failure(let error):
-                //manage error
-                print(error.rawValue)
-                break
-            }
-        }
         
-        //MARK:- SUGESTIONS
-        networkManager.getDomains(for: searchTerms, withUrl: exactURL, for: DomainSearchRecommendedResponse.self) { recomendedResults in
-            switch recomendedResults {
-            case .success(let recomended):
-                
-                guard let recomendedPriceInfo = recomended?.products.first(where: { $0.productId == recomended?.domains.first?.productId })?.priceInfo else { return }
-                
-                guard let recomendedDomains = recomended?.domains else { return }
-                
-                for domain in recomendedDomains {
-                    let result = Domain(name: domain.fqdn, price: recomendedPriceInfo.currentPriceDisplay, productId: domain.productId)
-                    self.recomendedationDomain.append(result)
+        let urls = [exactURL, sugestedURL]
+        
+        for url in urls {
+            let dispatchGroup = DispatchGroup()
+            
+            dispatchGroup.enter()
+            //MARK:- EXACT RESULTS
+            networkManager.getDomains(for: searchTerms, withUrl: exactURL, for: DomainSearchExactMatchResponse.self) { exactResults in
+                switch exactResults {
+                case .success(let exactMatchResponse):
+                    guard let exactDomainPriceInfo = exactMatchResponse?.products.first(where: { $0.productId == exactMatchResponse?.domain.productId })?.priceInfo else { return }
+                    guard let domain = exactMatchResponse?.domain else {
+                        return
+                    }
+                    
+                    let result = Domain(name: domain.fqdn, price: exactDomainPriceInfo.currentPriceDisplay, productId: domain.productId)
+                    self.retreivedDomain.append(result)
+                    print("Resultssssss ",result)
+
+//                    self.data?.append(result)
+                case .failure(let error):
+                    //manage error
+                    print(error.rawValue)
+                    break
+                }
+            }
+            dispatchGroup.leave()
+            
+            //MARK:- SUGESTIONS
+            dispatchGroup.enter()
+            networkManager.getDomains(for: searchTerms, withUrl: sugestedURL, for: DomainSearchRecommendedResponse.self) { recomendedResults in
+                switch recomendedResults {
+                case .success(let recomended):
+                    
+                    guard let recomendedPriceInfo = recomended?.products.first(where: { $0.productId == recomended?.domains.first?.productId })?.priceInfo else { return }
+                    
+                    guard let recomendedDomains = recomended?.domains else { return }
+                    
+                    for domain in recomendedDomains {
+                        let result = Domain(name: domain.fqdn, price: recomendedPriceInfo.currentPriceDisplay, productId: domain.productId)
+                        self.recomendedationDomain.append(result)
+                        self.data?.append(result)
+                        print("Resultssssss@@@@ ",result)
+                    }
+                    
+                case .failure(let error):
+                    print(error.rawValue)
+                    break
+                    
+                }
+            }
+            dispatchGroup.leave()
+            
+            dispatchGroup.notify(queue: .main) {
+                                
+                self.data?.append(contentsOf: self.retreivedDomain)
+                self.data?.append(contentsOf: self.recomendedationDomain)
+                print("Printing from the .notify method: ", self.data)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
                 }
 
-            case .failure(let error):
-                print(error.rawValue)
-                break
                 
             }
         }
         
+       
         
-        
-        
-        
-        let session = URLSession(configuration: .default)
-        
-        var urlComponents = URLComponents(string: "https://gd.proxied.io/search/exact")!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "q", value: searchTerms)
-        ]
-        
-        var request = URLRequest(url: urlComponents.url!)
-        request.httpMethod = "GET"
-        
-        let task = session.dataTask(with: request) { (data, response, error) in
-            guard error == nil else { return }
-            
-            if let data = data {
-                let exactMatchResponse = try! JSONDecoder().decode(DomainSearchExactMatchResponse.self, from: data)
+//
+//        let session = URLSession(configuration: .default)
+//
+//        var urlComponents = URLComponents(string: "https://gd.proxied.io/search/exact")!
+//        urlComponents.queryItems = [
+//            URLQueryItem(name: "q", value: searchTerms)
+//        ]
+//
+//        var request = URLRequest(url: urlComponents.url!)
+//        request.httpMethod = "GET"
+//
+//        let task = session.dataTask(with: request) { (data, response, error) in
+//            guard error == nil else { return }
+//
+//            if let data = data {
+//                let exactMatchResponse = try! JSONDecoder().decode(DomainSearchExactMatchResponse.self, from: data)
+//
+//                var suggestionsComponents = URLComponents(string: "https://gd.proxied.io/search/spins")!
+//                suggestionsComponents.queryItems = [
+//                    URLQueryItem(name: "q", value: searchTerms)
+//                ]
+//
+//                var suggestionsRequest = URLRequest(url: suggestionsComponents.url!)
+//                suggestionsRequest.httpMethod = "GET"
+//
+//                let suggestionsTask = session.dataTask(with: suggestionsRequest) { (suggestionsData, suggestionsResponse, suggestionsError) in
+//                    guard error == nil else { return }
+//
+//                    if let suggestionsData = suggestionsData {
+//                        let suggestionsResponse = try! JSONDecoder().decode(DomainSearchRecommendedResponse.self, from: suggestionsData)
+//
+//                        let exactDomainPriceInfo = exactMatchResponse.products.first(where: { $0.productId == exactMatchResponse.domain.productId })!.priceInfo
+//                        let exactDomain = Domain(name: exactMatchResponse.domain.fqdn,
+//                                                 price: exactDomainPriceInfo.currentPriceDisplay,
+//                                                 productId: exactMatchResponse.domain.productId)
+//
+//                        let suggestionDomains = suggestionsResponse.domains.map { domain -> Domain in
+//                            let priceInfo = suggestionsResponse.products.first(where: { price in
+//                                price.productId == domain.productId
+//                            })!.priceInfo
+//
+//                            return Domain(name: domain.fqdn, price: priceInfo.currentPriceDisplay, productId: domain.productId)
+//                        }
+//
+//                        self.data = [exactDomain] + suggestionDomains
+//                        print(self.data)
+//
+//                        DispatchQueue.main.async {
+//                            self.tableView.reloadData()
+//                        }
+//                    }
+//                }
                 
-                var suggestionsComponents = URLComponents(string: "https://gd.proxied.io/search/spins")!
-                suggestionsComponents.queryItems = [
-                    URLQueryItem(name: "q", value: searchTerms)
-                ]
-                
-                var suggestionsRequest = URLRequest(url: suggestionsComponents.url!)
-                suggestionsRequest.httpMethod = "GET"
-                
-                let suggestionsTask = session.dataTask(with: suggestionsRequest) { (suggestionsData, suggestionsResponse, suggestionsError) in
-                    guard error == nil else { return }
-                    
-                    if let suggestionsData = suggestionsData {
-                        let suggestionsResponse = try! JSONDecoder().decode(DomainSearchRecommendedResponse.self, from: suggestionsData)
-                        
-                        let exactDomainPriceInfo = exactMatchResponse.products.first(where: { $0.productId == exactMatchResponse.domain.productId })!.priceInfo
-                        let exactDomain = Domain(name: exactMatchResponse.domain.fqdn,
-                                                 price: exactDomainPriceInfo.currentPriceDisplay,
-                                                 productId: exactMatchResponse.domain.productId)
-                        
-                        let suggestionDomains = suggestionsResponse.domains.map { domain -> Domain in
-                            let priceInfo = suggestionsResponse.products.first(where: { price in
-                                price.productId == domain.productId
-                            })!.priceInfo
-                            
-                            return Domain(name: domain.fqdn, price: priceInfo.currentPriceDisplay, productId: domain.productId)
-                        }
-                        
-                        self.data = [exactDomain] + suggestionDomains
-                        print(self.data)
-                        
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
-                    }
-                }
-                
-                suggestionsTask.resume()
-            }
-        }
-        
-        task.resume()
+//                suggestionsTask.resume()
+//            }
+//        }
+//
+//        task.resume()
     }
     
     private func configureCartButton() {
