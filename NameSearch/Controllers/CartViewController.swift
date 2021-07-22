@@ -10,12 +10,16 @@ class CartViewController: UIViewController {
     @IBOutlet var tableView     : UITableView!
     
     let paymentNetworkManager   = AuthNetworkManager.shared
-    let paymentsManager         = PaymentsManager.shared
-    let authManager             = AuthManager.shared
+//    let paymentsManager         = PaymentsManager.shared
+    var paymentsManager         : PaymentMethod?
+//    let authManager           = AuthManager.shared
+    var authManager             : Auth?
     var domains: [Domain] = []
     
     @IBAction func payButtonTapped(_ sender: UIButton) {
-        if paymentsManager.selectedPaymentMethod == nil {
+//        if paymentsManager.selectedPaymentMethod == nil {
+        
+        if paymentsManager == nil {
             self.performSegue(withIdentifier: "showPaymentMethods", sender: self)
         } else {
             performPayment(with: StaticUrls.paymentProcessUrl)
@@ -47,7 +51,8 @@ class CartViewController: UIViewController {
     }
     
     func updatePayButton() {
-        if paymentsManager.selectedPaymentMethod == nil {
+//        if paymentsManager.selectedPaymentMethod == nil {
+        if paymentsManager == nil {
             payButton.setTitle("Select a Payment Method", for: .normal)
         } else {
             var totalPayment = 0.00
@@ -67,12 +72,15 @@ class CartViewController: UIViewController {
     //MARK:-Net Call
     func performPayment(with urlString: String) {
         payButton.isEnabled = false
-
+        guard let authToken = authManager?.token, let paymentToken = paymentsManager?.token else { return }
         let paymentMethod: [String: String] = [
-            "auth": AuthManager.shared.token!,
-            "token": paymentsManager.selectedPaymentMethod!.token
+//            "auth": AuthManager.shared.token!,
+            "auth": authToken,
+//            "token": paymentsManager.selectedPaymentMethod!.token
+            "token": paymentToken
         ]
-        paymentNetworkManager.authProcess(with: paymentMethod, withUrl: urlString, for: PaymentsManager.self) { [weak self] result in
+//        paymentNetworkManager.authProcess(with: paymentMethod, withUrl: urlString, for: PaymentsManager.self) { [weak self] result in
+        paymentNetworkManager.authProcess(with: paymentMethod, withUrl: urlString, for: PaymentMethod.self) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(_):
@@ -134,7 +142,12 @@ extension CartViewController: CartItemTableViewCellDelegate {
 }
 
 extension CartViewController: PaymentMethodsViewControllerDelegate {
-    func didSelectPaymentMethod() {
+    func didSelectPaymentMethod(method: PaymentMethod) {
+        self.paymentsManager = method
         updatePayButton()
     }
+    
+//    func didSelectPaymentMethod() {
+//        updatePayButton()
+//    }
 }

@@ -2,11 +2,11 @@ import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
-    let authUserManager = AuthNetworkManager.shared
-    
-    var loginResponse: LoginResponse?
-    @IBOutlet var usernameTextField: UITextField!
-    @IBOutlet var passwordTextField: UITextField!
+    @IBOutlet var usernameTextField : UITextField!
+    @IBOutlet var passwordTextField : UITextField!
+    let authUserNetworkManager      = AuthNetworkManager.shared
+    var auth                        : Auth?
+    var loginResponse               : LoginResponse?
     
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
@@ -34,13 +34,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func authenticateUser(user: [String: String], urlString: String) {
-        authUserManager.authProcess(with: user, withUrl: urlString, for: LoginResponse.self) { [weak self] response in
+        authUserNetworkManager.authProcess(with: user, withUrl: urlString, for: LoginResponse.self) { [weak self] response in
             guard let self = self else { return }
             
             switch response  {
             case .success(let authResponse):
-                AuthManager.shared.user = authResponse?.user
-                AuthManager.shared.token = authResponse?.auth.token
+                guard let authResponse = authResponse else { return }
+//                AuthManager.shared.user = authResponse?.user
+//                AuthManager.shared.token = authResponse?.auth.token
+                self.auth?.user = authResponse.user
+                self.auth?.token = authResponse.auth.token
                 
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showDomainSearch", sender: self)

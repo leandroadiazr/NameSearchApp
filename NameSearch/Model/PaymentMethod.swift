@@ -1,6 +1,6 @@
 struct PaymentMethod: Codable {
-    let name: String
-    let token: String
-    let lastFour: String?
-    let displayFormattedEmail: String?
+    var name: String
+    var token: String
+    var lastFour: String?
+    var displayFormattedEmail: String?
 }

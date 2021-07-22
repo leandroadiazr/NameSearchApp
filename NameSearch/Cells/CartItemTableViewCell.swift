@@ -10,10 +10,10 @@ class CartItemTableViewCell: UITableViewCell {
     @IBOutlet var priceLabel: UILabel!
     @IBOutlet var removeButton: UIButton!
     var domain: Domain?
+    var shoppingCart : [Domain] = []
 
     @IBAction func removeFromCartButtonTapped(_ sender: UIButton) {
-        ShoppingCart.shared.domains = ShoppingCart.shared.domains.filter { $0.name != nameLabel.text! }
-
+        shoppingCart = shoppingCart.filter { $0.name != nameLabel.text! }
         delegate.didRemoveFromCart()
     }
 

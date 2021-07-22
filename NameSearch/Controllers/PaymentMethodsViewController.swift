@@ -1,7 +1,7 @@
 import UIKit
 
 protocol PaymentMethodsViewControllerDelegate {
-    func didSelectPaymentMethod()
+    func didSelectPaymentMethod(method: PaymentMethod)
 }
 
 class PaymentMethodsViewController: UIViewController {
@@ -10,8 +10,8 @@ class PaymentMethodsViewController: UIViewController {
     
     var delegate: PaymentMethodsViewControllerDelegate?
     let paymentNetworkManager   = PaymentsNetworkManager.shared
-    let paymentManager          = PaymentsManager.shared
-    
+//    let paymentManager          = PaymentsManager.shared
+    var selectedPayment         : PaymentMethod?
     var paymentMethods: [PaymentMethod] = []
     
     override func viewDidLoad() {
@@ -59,9 +59,10 @@ extension PaymentMethodsViewController: UITableViewDataSource, UITableViewDelega
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let method = paymentMethods[indexPath.row]
-        paymentManager.selectedPaymentMethod = method
+//        paymentManager.selectedPaymentMethod = method
+        selectedPayment = method
         dismiss(animated: true) {
-            self.delegate?.didSelectPaymentMethod()
+            self.delegate?.didSelectPaymentMethod(method: self.selectedPayment!)
         }
     }
 }

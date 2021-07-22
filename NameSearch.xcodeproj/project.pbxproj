@@ -147,10 +147,7 @@
 				BC0E11672502F6E5007560B1 /* Assets.xcassets */,
 				BC0E11692502F6E5007560B1 /* LaunchScreen.storyboard */,
 				BC0E116C2502F6E5007560B1 /* Info.plist */,
-				BC0E1190250319F5007560B1 /* ShoppingCart.swift */,
 				E830F21326A7993000A6FD19 /* Cells */,
-				BCCC5DFB2506963000AC95C0 /* AuthManager.swift */,
-				BCCC5E05250698E500AC95C0 /* PaymentsManager.swift */,
 				E830F21426A7996E00A6FD19 /* Model */,
 			);
 			path = NameSearch;
@@ -206,6 +203,7 @@
 		E830F21426A7996E00A6FD19 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BC0E1190250319F5007560B1 /* ShoppingCart.swift */,
 				BCCC5E01250696C000AC95C0 /* LoginResponse.swift */,
 				BC0E118E25030062007560B1 /* DomainSearchResponseTypes.swift */,
 				BCCC5DFD2506967000AC95C0 /* User.swift */,
@@ -219,6 +217,8 @@
 		E830F21526A79B9A00A6FD19 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				BCCC5DFB2506963000AC95C0 /* AuthManager.swift */,
+				BCCC5E05250698E500AC95C0 /* PaymentsManager.swift */,
 				E830F21626A79BB900A6FD19 /* AuthNetworkManager.swift */,
 				E830F22126A7CC7B00A6FD19 /* NetworkManager.swift */,
 				E8D648A226A9222000139161 /* PaymentsNetworkManager.swift */,
