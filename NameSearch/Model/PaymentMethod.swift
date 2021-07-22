@@ -1,4 +1,4 @@
-struct PaymentMethod: Decodable {
+struct PaymentMethod: Codable {
     let name: String
     let token: String
     let lastFour: String?

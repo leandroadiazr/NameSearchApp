@@ -9,7 +9,8 @@ class DomainSearchViewController: UIViewController {
     let exactURL  = "https://gd.proxied.io/search/exact"
     let sugestedURL = "https://gd.proxied.io/search/spins"
     let networkManager = NetworkManager.shared
-    
+    var shoppingCart: [Domain] = []
+
     var isSearchEntered: Bool { return !searchTermsTextField.text!.isEmpty }
     
     @IBAction func searchButtonTapped(_ sender: UIButton) {
@@ -23,9 +24,8 @@ class DomainSearchViewController: UIViewController {
         }
     }
     
-    @IBAction func cartButtonTapped(_ sender: UIButton) {
-    }
-    
+    @IBAction func cartButtonTapped(_ sender: UIButton) {}
+
     var data: [Domain] = []
     
     override func viewDidLoad() {
@@ -96,7 +96,7 @@ class DomainSearchViewController: UIViewController {
     }
     
     private func configureCartButton() {
-        cartButton.isEnabled = !ShoppingCart.shared.domains.isEmpty
+        cartButton.isEnabled = !shoppingCart.isEmpty
         cartButton.backgroundColor = cartButton.isEnabled ? .black : .lightGray
     }
 }
@@ -106,11 +106,10 @@ extension DomainSearchViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
         let item = data[indexPath.row]
-        
+    
         cell.textLabel!.text = item.name
         cell.detailTextLabel!.text = item.price
-        
-        let selected = ShoppingCart.shared.domains.contains(where: { $0.name == data[indexPath.row].name })
+        let selected = shoppingCart.contains(where: { $0.name == data[indexPath.row].name })
         DispatchQueue.main.async {
             cell.setSelected(selected, animated: true)
         }
@@ -123,13 +122,20 @@ extension DomainSearchViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let domain = data[indexPath.row]
-        ShoppingCart.shared.domains.append(domain)
+        shoppingCart.append(domain)
         configureCartButton()
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let domain = data[indexPath.row]
-        ShoppingCart.shared.domains = ShoppingCart.shared.domains.filter { $0.name != domain.name }
+        shoppingCart = shoppingCart.filter { $0.name != domain.name }
         configureCartButton()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+          if segue.identifier == "CartButtonSegue" {
+              let cartVC: CartViewController = segue.destination as! CartViewController
+              cartVC.domains.append(contentsOf: shoppingCart)
+          }
+      }
 }

@@ -1,15 +1,24 @@
 import UIKit
 
+
+
+
 class CartViewController: UIViewController {
 
-    @IBOutlet var payButton: UIButton!
-    @IBOutlet var tableView: UITableView!
-
+    
+    @IBOutlet var payButton     : UIButton!
+    @IBOutlet var tableView     : UITableView!
+    let paymentUrlString        = "https://gd.proxied.io/payments/process"
+    let paymentNetworkManager   = AuthNetworkManager.shared
+    let paymentsManager         = PaymentsManager.shared
+    let authManager             = AuthManager.shared
+    var domains: [Domain] = []
+    
     @IBAction func payButtonTapped(_ sender: UIButton) {
-        if PaymentsManager.shared.selectedPaymentMethod == nil {
+        if paymentsManager.selectedPaymentMethod == nil {
             self.performSegue(withIdentifier: "showPaymentMethods", sender: self)
         } else {
-            performPayment()
+            performPayment(with: paymentUrlString)
         }
     }
 
@@ -21,10 +30,12 @@ class CartViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -36,63 +47,44 @@ class CartViewController: UIViewController {
     }
     
     func updatePayButton() {
-        if PaymentsManager.shared.selectedPaymentMethod == nil {
+        if paymentsManager.selectedPaymentMethod == nil {
             payButton.setTitle("Select a Payment Method", for: .normal)
         } else {
             var totalPayment = 0.00
-
-            ShoppingCart.shared.domains.forEach {
-                let priceDouble = Double($0.price.replacingOccurrences(of: "$", with: ""))!
-                totalPayment += priceDouble
+    
+            domains.forEach {
+                let priceDouble     = Double($0.price.replacingOccurrences(of: "$", with: ""))!
+                totalPayment        += priceDouble
             }
 
-            let currencyFormatter = NumberFormatter()
-            currencyFormatter.numberStyle = .currency
+            let currencyFormatter           = NumberFormatter()
+            currencyFormatter.numberStyle   = .currency
 
             payButton.setTitle("Pay \(currencyFormatter.string(from: NSNumber(value: totalPayment))!) Now", for: .normal)
         }
     }
 
-    func performPayment() {
+    //MARK:-Net Call
+    func performPayment(with urlString: String) {
         payButton.isEnabled = false
 
-        let dict: [String: String] = [
+        let paymentMethod: [String: String] = [
             "auth": AuthManager.shared.token!,
-            "token": PaymentsManager.shared.selectedPaymentMethod!.token
+            "token": paymentsManager.selectedPaymentMethod!.token
         ]
-
-        var request = URLRequest(url: URL(string: "https://gd.proxied.io/payments/process")!)
-        request.httpMethod = "POST"
-        request.httpBody = try! JSONSerialization.data(withJSONObject: dict, options: .fragmentsAllowed)
-
-        let session = URLSession(configuration: .default)
-        let task = session.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                let controller = UIAlertController(title: "Oops!", message: error.localizedDescription, preferredStyle: .alert)
-
-                let action = UIAlertAction(title: "Ok", style: .cancel) { _ in
-                    self.payButton.isEnabled = true
-                }
-
-                controller.addAction(action)
-
+        paymentNetworkManager.authProcess(with: paymentMethod, withUrl: urlString, for: PaymentsManager.self) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(_):
                 DispatchQueue.main.async {
-                    self.present(controller, animated: true)
+                    self.showCustomAlert(title: "All done!", message: "Your purchase is complete!", actionTitle: "Ok")
                 }
-            } else {
-                let controller = UIAlertController(title: "All done!", message: "Your purchase is complete!", preferredStyle: .alert)
-
-                let action = UIAlertAction(title: "Ok", style: .default) { _ in }
-
-                controller.addAction(action)
-
+            case .failure(let error):
                 DispatchQueue.main.async {
-                    self.present(controller, animated: true)
+                self.showCustomAlert(title: "Oops!", message: error.rawValue, actionTitle: "Ok")
                 }
             }
-
         }
-        task.resume()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -102,20 +94,14 @@ class CartViewController: UIViewController {
 }
 
 extension CartViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ShoppingCart.shared.domains.count
+        return domains.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CartItemCell", for: indexPath) as! CartItemTableViewCell
-
         cell.delegate = self
-
-        cell.nameLabel.text = ShoppingCart.shared.domains[indexPath.row].name
-        cell.priceLabel.text = ShoppingCart.shared.domains[indexPath.row].price
-
+        cell.nameLabel.text = domains[indexPath.row].name
+        cell.priceLabel.text = domains[indexPath.row].price
         return cell
     }
 }

@@ -2,7 +2,7 @@ import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
-    let userManager = UserManager.shared
+    let authUserManager = AuthNetworkManager.shared
     let userUrlString = "https://gd.proxied.io/auth/login"
     var loginResponse: LoginResponse?
     @IBOutlet var usernameTextField: UITextField!
@@ -34,7 +34,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func authenticateUser(user: [String: String], urlString: String) {
-        userManager.authProcess(with: user, withUrl: urlString, for: LoginResponse.self) { [weak self] response in
+        authUserManager.authProcess(with: user, withUrl: urlString, for: LoginResponse.self) { [weak self] response in
             guard let self = self else { return }
             
             switch response  {

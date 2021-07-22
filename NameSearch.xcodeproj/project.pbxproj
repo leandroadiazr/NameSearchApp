@@ -28,12 +28,13 @@
 		BCCC5E04250698C800AC95C0 /* PaymentMethodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC5E03250698C800AC95C0 /* PaymentMethodsViewController.swift */; };
 		BCCC5E06250698E500AC95C0 /* PaymentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC5E05250698E500AC95C0 /* PaymentsManager.swift */; };
 		BCCC5E082506990E00AC95C0 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC5E072506990E00AC95C0 /* PaymentMethod.swift */; };
-		E830F21726A79BB900A6FD19 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21626A79BB900A6FD19 /* UserManager.swift */; };
+		E830F21726A79BB900A6FD19 /* AuthNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21626A79BB900A6FD19 /* AuthNetworkManager.swift */; };
 		E830F21A26A7A2A000A6FD19 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21926A7A2A000A6FD19 /* CustomError.swift */; };
 		E830F21C26A7B61900A6FD19 /* _LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21B26A7B61900A6FD19 /* _LoginViewController.swift */; };
 		E830F21E26A7C8E200A6FD19 /* _DomainSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21D26A7C8E200A6FD19 /* _DomainSearchViewController.swift */; };
 		E830F22026A7C95F00A6FD19 /* Domain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21F26A7C95F00A6FD19 /* Domain.swift */; };
 		E830F22226A7CC7B00A6FD19 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F22126A7CC7B00A6FD19 /* NetworkManager.swift */; };
+		E8D648A326A9222000139161 /* PaymentsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D648A226A9222000139161 /* PaymentsNetworkManager.swift */; };
 		E8EC06B226A8B61500F3E3D6 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EC06B126A8B61500F3E3D6 /* UIViewExtensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -82,12 +83,13 @@
 		BCCC5E03250698C800AC95C0 /* PaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsViewController.swift; sourceTree = "<group>"; };
 		BCCC5E05250698E500AC95C0 /* PaymentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsManager.swift; sourceTree = "<group>"; };
 		BCCC5E072506990E00AC95C0 /* PaymentMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethod.swift; sourceTree = "<group>"; };
-		E830F21626A79BB900A6FD19 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		E830F21626A79BB900A6FD19 /* AuthNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNetworkManager.swift; sourceTree = "<group>"; };
 		E830F21926A7A2A000A6FD19 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		E830F21B26A7B61900A6FD19 /* _LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _LoginViewController.swift; sourceTree = "<group>"; };
 		E830F21D26A7C8E200A6FD19 /* _DomainSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _DomainSearchViewController.swift; sourceTree = "<group>"; };
 		E830F21F26A7C95F00A6FD19 /* Domain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Domain.swift; sourceTree = "<group>"; };
 		E830F22126A7CC7B00A6FD19 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		E8D648A226A9222000139161 /* PaymentsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsNetworkManager.swift; sourceTree = "<group>"; };
 		E8EC06B126A8B61500F3E3D6 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -221,8 +223,9 @@
 		E830F21526A79B9A00A6FD19 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				E830F21626A79BB900A6FD19 /* UserManager.swift */,
+				E830F21626A79BB900A6FD19 /* AuthNetworkManager.swift */,
 				E830F22126A7CC7B00A6FD19 /* NetworkManager.swift */,
+				E8D648A226A9222000139161 /* PaymentsNetworkManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -375,13 +378,14 @@
 				E830F22226A7CC7B00A6FD19 /* NetworkManager.swift in Sources */,
 				BCCC5E02250696C000AC95C0 /* LoginResponse.swift in Sources */,
 				BC0E1191250319F5007560B1 /* ShoppingCart.swift in Sources */,
-				E830F21726A79BB900A6FD19 /* UserManager.swift in Sources */,
+				E830F21726A79BB900A6FD19 /* AuthNetworkManager.swift in Sources */,
 				BC0E11632502F6E1007560B1 /* DomainSearchViewController.swift in Sources */,
 				BC0E115F2502F6E1007560B1 /* AppDelegate.swift in Sources */,
 				E830F21C26A7B61900A6FD19 /* _LoginViewController.swift in Sources */,
 				BCCC5DFA2506931B00AC95C0 /* LoginViewController.swift in Sources */,
 				BCCC5E002506968F00AC95C0 /* Auth.swift in Sources */,
 				E830F22026A7C95F00A6FD19 /* Domain.swift in Sources */,
+				E8D648A326A9222000139161 /* PaymentsNetworkManager.swift in Sources */,
 				BCCC5E06250698E500AC95C0 /* PaymentsManager.swift in Sources */,
 				BCCC5E082506990E00AC95C0 /* PaymentMethod.swift in Sources */,
 				BCCC5E04250698C800AC95C0 /* PaymentMethodsViewController.swift in Sources */,
@@ -565,6 +569,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WCYKWTBZ5Q;
 				INFOPLIST_FILE = NameSearch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -582,6 +587,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WCYKWTBZ5Q;
 				INFOPLIST_FILE = NameSearch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -600,6 +606,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WCYKWTBZ5Q;
 				INFOPLIST_FILE = NameSearchTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -621,6 +628,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WCYKWTBZ5Q;
 				INFOPLIST_FILE = NameSearchTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -640,7 +648,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WCYKWTBZ5Q;
 				INFOPLIST_FILE = NameSearchUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -659,7 +669,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WCYKWTBZ5Q;
 				INFOPLIST_FILE = NameSearchUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
