@@ -18,7 +18,7 @@ class AuthNetworkManager {
             completion(.failure(.invalid))
             return
         }
-        print(url)
+    
         var request = URLRequest(url: url)
         guard let encoding = try? JSONSerialization.data(withJSONObject: requestData, options: .fragmentsAllowed) else {
             completion(.failure(.invalid))

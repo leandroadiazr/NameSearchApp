@@ -6,8 +6,7 @@ class DomainSearchViewController: UIViewController {
     @IBOutlet var searchTermsTextField: UITextField!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var cartButton: UIButton!
-    let exactURL  = "https://gd.proxied.io/search/exact"
-    let sugestedURL = "https://gd.proxied.io/search/spins"
+    
     let networkManager = NetworkManager.shared
     var shoppingCart: [Domain] = []
 
@@ -15,7 +14,7 @@ class DomainSearchViewController: UIViewController {
     
     @IBAction func searchButtonTapped(_ sender: UIButton) {
         guard isSearchEntered else {
-            showCustomAlert(title: "Empty Field", message: "Please check your input...", actionTitle: "Ok")
+            showCustomAlert(title: CustomMessages.emptyTitle, message: CustomMessages.checkInput, actionTitle: CustomMessages.ok)
             return
         }
         if let searchTerms = searchTermsTextField.text {
@@ -51,7 +50,7 @@ class DomainSearchViewController: UIViewController {
         
         //MARK:- EXACT RESULTS
         dispatchGroup.enter()
-        networkManager.getDomains(for: searchTerms, withUrl: exactURL, for: DomainSearchExactMatchResponse.self) { [weak self] exactResults in
+        networkManager.getDomains(for: searchTerms, withUrl: StaticUrls.exactURL, for: DomainSearchExactMatchResponse.self) { [weak self] exactResults in
             guard let self = self else {return}
             switch exactResults {
             case .success(let exactMatchResponse):
@@ -61,8 +60,8 @@ class DomainSearchViewController: UIViewController {
                 let result = Domain(name: domain.fqdn, price: exactDomainPriceInfo.currentPriceDisplay, productId: domain.productId)
                 self.data.append(result)
             case .failure(let error):
-                self.showCustomAlert(title: "Error Occurred", message: error.rawValue, actionTitle: "Ok")
-                print(error.rawValue)
+                self.showCustomAlert(title: CustomMessages.error, message: error.rawValue, actionTitle: CustomMessages.ok)
+            
                 break
             }
             dispatchGroup.leave()
@@ -70,7 +69,7 @@ class DomainSearchViewController: UIViewController {
         
         //MARK:- SUGESTIONS
         dispatchGroup.enter()
-        networkManager.getDomains(for: searchTerms, withUrl: sugestedURL, for: DomainSearchRecommendedResponse.self) { [weak self] recomendedResults in
+        networkManager.getDomains(for: searchTerms, withUrl: StaticUrls.sugestedURL, for: DomainSearchRecommendedResponse.self) { [weak self] recomendedResults in
             guard let self = self else {return}
             switch recomendedResults {
             case .success(let recomended):
@@ -82,7 +81,7 @@ class DomainSearchViewController: UIViewController {
                     self.data.append(result)
                 }
             case .failure(let error):
-                self.showCustomAlert(title: "Error Occurred", message: error.rawValue, actionTitle: "Ok")
+                self.showCustomAlert(title: CustomMessages.error, message: error.rawValue, actionTitle: CustomMessages.ok)
                 break
             }
             dispatchGroup.leave()

@@ -11,12 +11,12 @@ class PaymentMethodsViewController: UIViewController {
     var delegate: PaymentMethodsViewControllerDelegate?
     let paymentNetworkManager   = PaymentsNetworkManager.shared
     let paymentManager          = PaymentsManager.shared
-    let paymentURL = "https://gd.proxied.io/user/payment-methods"
+    
     var paymentMethods: [PaymentMethod] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        choosePaymentType(with: paymentURL)
+        choosePaymentType(with: StaticUrls.paymentMethodUrl)
     }
     
     private func choosePaymentType(with urlString: String) {
@@ -31,7 +31,7 @@ class PaymentMethodsViewController: UIViewController {
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.showCustomAlert(title: "Payments Error", message: error.rawValue, actionTitle: "Ok")
+                    self.showCustomAlert(title: CustomMessages.paymentError, message: error.rawValue, actionTitle: CustomMessages.ok)
                 }
             }
         }

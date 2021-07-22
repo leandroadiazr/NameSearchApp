@@ -3,7 +3,7 @@ import UIKit
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     let authUserManager = AuthNetworkManager.shared
-    let userUrlString = "https://gd.proxied.io/auth/login"
+    
     var loginResponse: LoginResponse?
     @IBOutlet var usernameTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
@@ -11,12 +11,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         guard !usernameTextField.text!.isEmpty else {
-            print("empty user name")
+            showCustomAlert(title: CustomMessages.emptyTitle, message: CustomMessages.emptyUser, actionTitle: CustomMessages.ok)
             return
         }
         
         guard !passwordTextField.text!.isEmpty else {
-            print("empty password")
+            showCustomAlert(title: CustomMessages.emptyTitle, message: CustomMessages.emptyPass, actionTitle: CustomMessages.ok)
             return
         }
         
@@ -30,7 +30,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             "password": password
         ]
         
-        authenticateUser(user: user, urlString: userUrlString)
+        authenticateUser(user: user, urlString: StaticUrls.userUrl)
     }
     
     private func authenticateUser(user: [String: String], urlString: String) {
@@ -47,8 +47,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
                 
             case .failure(let error):
-                let alert = UIAlertController(title: "Error", message: error.rawValue, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                let alert = UIAlertController(title: CustomMessages.error, message: error.rawValue, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: CustomMessages.ok, style: .default, handler: nil))
                 DispatchQueue.main.async {
                     self.present(alert, animated: true, completion: nil)
                 }

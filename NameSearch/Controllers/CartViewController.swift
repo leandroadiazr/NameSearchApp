@@ -8,7 +8,7 @@ class CartViewController: UIViewController {
     
     @IBOutlet var payButton     : UIButton!
     @IBOutlet var tableView     : UITableView!
-    let paymentUrlString        = "https://gd.proxied.io/payments/process"
+    
     let paymentNetworkManager   = AuthNetworkManager.shared
     let paymentsManager         = PaymentsManager.shared
     let authManager             = AuthManager.shared
@@ -18,7 +18,7 @@ class CartViewController: UIViewController {
         if paymentsManager.selectedPaymentMethod == nil {
             self.performSegue(withIdentifier: "showPaymentMethods", sender: self)
         } else {
-            performPayment(with: paymentUrlString)
+            performPayment(with: StaticUrls.paymentProcessUrl)
         }
     }
 
@@ -77,11 +77,11 @@ class CartViewController: UIViewController {
             switch result {
             case .success(_):
                 DispatchQueue.main.async {
-                    self.showCustomAlert(title: "All done!", message: "Your purchase is complete!", actionTitle: "Ok")
+                    self.showCustomAlert(title: CustomMessages.done, message: CustomMessages.purchased, actionTitle: CustomMessages.ok)
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                self.showCustomAlert(title: "Oops!", message: error.rawValue, actionTitle: "Ok")
+                self.showCustomAlert(title: CustomMessages.oops, message: error.rawValue, actionTitle: CustomMessages.ok)
                 }
             }
         }
@@ -93,7 +93,10 @@ class CartViewController: UIViewController {
     }
 }
 
-extension CartViewController: UITableViewDataSource {
+extension CartViewController: UITableViewDataSource, UITableViewDelegate {
+ 
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return domains.count
     }
@@ -102,14 +105,31 @@ extension CartViewController: UITableViewDataSource {
         cell.delegate = self
         cell.nameLabel.text = domains[indexPath.row].name
         cell.priceLabel.text = domains[indexPath.row].price
+        
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            domains.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+        }
+    }
+
 }
 
 extension CartViewController: CartItemTableViewCellDelegate {
+    
     func didRemoveFromCart() {
+        self.tableView.setEditing(true, animated: true)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
         updatePayButton()
-        tableView.reloadData()
     }
 }
 
