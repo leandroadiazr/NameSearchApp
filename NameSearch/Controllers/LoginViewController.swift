@@ -4,10 +4,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var usernameTextField : UITextField!
     @IBOutlet var passwordTextField : UITextField!
+    @IBOutlet weak var loginButton: UIButton!
+    
     let authUserNetworkManager      = AuthNetworkManager.shared
     var auth                        : Auth?
     var loginResponse               : LoginResponse?
     
+    override func viewDidLoad() {
+        setupUI()
+    }
+    
+    private func setupUI() {
+        usernameTextField.placeholder = "Username"
+        passwordTextField.placeholder = "Password"
+    }
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         guard !usernameTextField.text!.isEmpty else {
