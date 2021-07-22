@@ -19,6 +19,7 @@ class PaymentMethodsViewController: UIViewController {
     }
     
     private func choosePaymentType(with urlString: String) {
+        showCustomLoadingView()
         paymentNetworkManager.retreivePayments(with: urlString, for: PaymentMethod.self) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -28,6 +29,7 @@ class PaymentMethodsViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
+                self.dismissLoadingView()
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.showCustomAlert(title: CustomMessages.paymentError, message: error.rawValue, actionTitle: CustomMessages.ok)

@@ -29,10 +29,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             "username": username,
             "password": password
         ]
+        
         authenticateUser(user: user, urlString: StaticUrls.userUrl)
     }
     
     private func authenticateUser(user: [String: String], urlString: String) {
+        showCustomLoadingView()
         authUserNetworkManager.authProcess(with: user, withUrl: urlString, for: LoginResponse.self) { [weak self] response in
             guard let self = self else { return }
             
@@ -41,7 +43,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 guard let authResponse = authResponse else { return }
                 self.auth?.user = authResponse.user
                 self.auth?.token = authResponse.auth.token
-                
+                self.dismissLoadingView()
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showDomainSearch", sender: self)
                 }

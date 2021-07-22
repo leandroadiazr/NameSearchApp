@@ -71,7 +71,7 @@ class CartViewController: UIViewController {
             "auth": authToken,
             "token": paymentToken
         ]
-        
+        showCustomLoadingView()
         paymentNetworkManager.authProcess(with: paymentMethod, withUrl: urlString, for: PaymentMethod.self) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -79,6 +79,7 @@ class CartViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.showCustomAlert(title: CustomMessages.done, message: CustomMessages.purchased, actionTitle: CustomMessages.ok)
                 }
+                self.dismissLoadingView()
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.showCustomAlert(title: CustomMessages.oops, message: error.rawValue, actionTitle: CustomMessages.ok)

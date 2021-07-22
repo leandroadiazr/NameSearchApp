@@ -46,6 +46,7 @@ class DomainSearchViewController: UIViewController {
     }
     
     private func loadData(with searchTerms: String) {
+        showCustomLoadingView()
         let dispatchGroup = DispatchGroup()
         
         //MARK:- EXACT RESULTS
@@ -88,6 +89,7 @@ class DomainSearchViewController: UIViewController {
         }
         
         dispatchGroup.notify(queue: .main) {
+            self.dismissLoadingView()
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
