@@ -10,7 +10,6 @@ class PaymentMethodsViewController: UIViewController {
     
     var delegate: PaymentMethodsViewControllerDelegate?
     let paymentNetworkManager   = PaymentsNetworkManager.shared
-//    let paymentManager          = PaymentsManager.shared
     var selectedPayment         : PaymentMethod?
     var paymentMethods: [PaymentMethod] = []
     
@@ -47,9 +46,7 @@ extension PaymentMethodsViewController: UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
         let method = paymentMethods[indexPath.row]
-        
         cell.textLabel!.text = method.name
-        
         if let lastFour = method.lastFour {
             cell.detailTextLabel!.text = "Ending in \(lastFour)"
         } else {
@@ -59,7 +56,6 @@ extension PaymentMethodsViewController: UITableViewDataSource, UITableViewDelega
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let method = paymentMethods[indexPath.row]
-//        paymentManager.selectedPaymentMethod = method
         selectedPayment = method
         dismiss(animated: true) {
             self.delegate?.didSelectPaymentMethod(method: self.selectedPayment!)

@@ -9,7 +9,7 @@ class DomainSearchViewController: UIViewController {
     
     let networkManager = NetworkManager.shared
     var shoppingCart: [Domain] = []
-
+    
     var isSearchEntered: Bool { return !searchTermsTextField.text!.isEmpty }
     
     @IBAction func searchButtonTapped(_ sender: UIButton) {
@@ -24,7 +24,7 @@ class DomainSearchViewController: UIViewController {
     }
     
     @IBAction func cartButtonTapped(_ sender: UIButton) {}
-
+    
     var data: [Domain] = []
     
     override func viewDidLoad() {
@@ -61,7 +61,7 @@ class DomainSearchViewController: UIViewController {
                 self.data.append(result)
             case .failure(let error):
                 self.showCustomAlert(title: CustomMessages.error, message: error.rawValue, actionTitle: CustomMessages.ok)
-            
+                
                 break
             }
             dispatchGroup.leave()
@@ -105,7 +105,7 @@ extension DomainSearchViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
         let item = data[indexPath.row]
-    
+        
         cell.textLabel!.text = item.name
         cell.detailTextLabel!.text = item.price
         let selected = shoppingCart.contains(where: { $0.name == data[indexPath.row].name })
@@ -132,9 +132,9 @@ extension DomainSearchViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-          if segue.identifier == "CartButtonSegue" {
-              let cartVC: CartViewController = segue.destination as! CartViewController
-              cartVC.domains.append(contentsOf: shoppingCart)
-          }
-      }
+        if segue.identifier == "CartButtonSegue" {
+            let cartVC: CartViewController = segue.destination as! CartViewController
+            cartVC.domains.append(contentsOf: shoppingCart)
+        }
+    }
 }

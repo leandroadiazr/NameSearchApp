@@ -16,17 +16,14 @@
 		BC0E11762502F6E6007560B1 /* NameSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0E11752502F6E6007560B1 /* NameSearchTests.swift */; };
 		BC0E11812502F6E6007560B1 /* NameSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0E11802502F6E6007560B1 /* NameSearchUITests.swift */; };
 		BC0E118F25030062007560B1 /* DomainSearchResponseTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0E118E25030062007560B1 /* DomainSearchResponseTypes.swift */; };
-		BC0E1191250319F5007560B1 /* ShoppingCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0E1190250319F5007560B1 /* ShoppingCart.swift */; };
 		BC0E11932503267C007560B1 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0E11922503267C007560B1 /* CartViewController.swift */; };
 		BC0E11962503BD21007560B1 /* CartItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0E11942503BD21007560B1 /* CartItemTableViewCell.swift */; };
 		BC0E11972503BD21007560B1 /* CartItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC0E11952503BD21007560B1 /* CartItemTableViewCell.xib */; };
 		BCCC5DFA2506931B00AC95C0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC5DF92506931B00AC95C0 /* LoginViewController.swift */; };
-		BCCC5DFC2506963000AC95C0 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC5DFB2506963000AC95C0 /* AuthManager.swift */; };
 		BCCC5DFE2506967000AC95C0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC5DFD2506967000AC95C0 /* User.swift */; };
 		BCCC5E002506968F00AC95C0 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC5DFF2506968F00AC95C0 /* Auth.swift */; };
 		BCCC5E02250696C000AC95C0 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC5E01250696C000AC95C0 /* LoginResponse.swift */; };
 		BCCC5E04250698C800AC95C0 /* PaymentMethodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC5E03250698C800AC95C0 /* PaymentMethodsViewController.swift */; };
-		BCCC5E06250698E500AC95C0 /* PaymentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC5E05250698E500AC95C0 /* PaymentsManager.swift */; };
 		BCCC5E082506990E00AC95C0 /* PaymentMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCC5E072506990E00AC95C0 /* PaymentMethod.swift */; };
 		E830F21726A79BB900A6FD19 /* AuthNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21626A79BB900A6FD19 /* AuthNetworkManager.swift */; };
 		E830F21A26A7A2A000A6FD19 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E830F21926A7A2A000A6FD19 /* CustomError.swift */; };
@@ -70,17 +67,14 @@
 		BC0E11802502F6E6007560B1 /* NameSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameSearchUITests.swift; sourceTree = "<group>"; };
 		BC0E11822502F6E6007560B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC0E118E25030062007560B1 /* DomainSearchResponseTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainSearchResponseTypes.swift; sourceTree = "<group>"; };
-		BC0E1190250319F5007560B1 /* ShoppingCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCart.swift; sourceTree = "<group>"; };
 		BC0E11922503267C007560B1 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		BC0E11942503BD21007560B1 /* CartItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItemTableViewCell.swift; sourceTree = "<group>"; };
 		BC0E11952503BD21007560B1 /* CartItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CartItemTableViewCell.xib; sourceTree = "<group>"; };
 		BCCC5DF92506931B00AC95C0 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		BCCC5DFB2506963000AC95C0 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		BCCC5DFD2506967000AC95C0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BCCC5DFF2506968F00AC95C0 /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		BCCC5E01250696C000AC95C0 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		BCCC5E03250698C800AC95C0 /* PaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsViewController.swift; sourceTree = "<group>"; };
-		BCCC5E05250698E500AC95C0 /* PaymentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsManager.swift; sourceTree = "<group>"; };
 		BCCC5E072506990E00AC95C0 /* PaymentMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethod.swift; sourceTree = "<group>"; };
 		E830F21626A79BB900A6FD19 /* AuthNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNetworkManager.swift; sourceTree = "<group>"; };
 		E830F21926A7A2A000A6FD19 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
@@ -203,7 +197,6 @@
 		E830F21426A7996E00A6FD19 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BC0E1190250319F5007560B1 /* ShoppingCart.swift */,
 				BCCC5E01250696C000AC95C0 /* LoginResponse.swift */,
 				BC0E118E25030062007560B1 /* DomainSearchResponseTypes.swift */,
 				BCCC5DFD2506967000AC95C0 /* User.swift */,
@@ -217,8 +210,6 @@
 		E830F21526A79B9A00A6FD19 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				BCCC5DFB2506963000AC95C0 /* AuthManager.swift */,
-				BCCC5E05250698E500AC95C0 /* PaymentsManager.swift */,
 				E830F21626A79BB900A6FD19 /* AuthNetworkManager.swift */,
 				E830F22126A7CC7B00A6FD19 /* NetworkManager.swift */,
 				E8D648A226A9222000139161 /* PaymentsNetworkManager.swift */,
@@ -370,11 +361,9 @@
 			files = (
 				E8EC06B226A8B61500F3E3D6 /* UIViewExtensions.swift in Sources */,
 				BC0E11962503BD21007560B1 /* CartItemTableViewCell.swift in Sources */,
-				BCCC5DFC2506963000AC95C0 /* AuthManager.swift in Sources */,
 				E830F21A26A7A2A000A6FD19 /* CustomError.swift in Sources */,
 				E830F22226A7CC7B00A6FD19 /* NetworkManager.swift in Sources */,
 				BCCC5E02250696C000AC95C0 /* LoginResponse.swift in Sources */,
-				BC0E1191250319F5007560B1 /* ShoppingCart.swift in Sources */,
 				E830F21726A79BB900A6FD19 /* AuthNetworkManager.swift in Sources */,
 				BC0E11632502F6E1007560B1 /* DomainSearchViewController.swift in Sources */,
 				BC0E115F2502F6E1007560B1 /* AppDelegate.swift in Sources */,
@@ -382,7 +371,6 @@
 				BCCC5E002506968F00AC95C0 /* Auth.swift in Sources */,
 				E830F22026A7C95F00A6FD19 /* Domain.swift in Sources */,
 				E8D648A326A9222000139161 /* PaymentsNetworkManager.swift in Sources */,
-				BCCC5E06250698E500AC95C0 /* PaymentsManager.swift in Sources */,
 				BCCC5E082506990E00AC95C0 /* PaymentMethod.swift in Sources */,
 				BCCC5E04250698C800AC95C0 /* PaymentMethodsViewController.swift in Sources */,
 				BC0E118F25030062007560B1 /* DomainSearchResponseTypes.swift in Sources */,

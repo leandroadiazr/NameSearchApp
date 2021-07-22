@@ -22,14 +22,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         guard let username = usernameTextField.text,
               let password = usernameTextField.text else {
-            return
-        }
+                  return
+              }
         
         let user: [String: String] = [
             "username": username,
             "password": password
         ]
-        
         authenticateUser(user: user, urlString: StaticUrls.userUrl)
     }
     
@@ -40,8 +39,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             switch response  {
             case .success(let authResponse):
                 guard let authResponse = authResponse else { return }
-//                AuthManager.shared.user = authResponse?.user
-//                AuthManager.shared.token = authResponse?.auth.token
                 self.auth?.user = authResponse.user
                 self.auth?.token = authResponse.auth.token
                 

@@ -1,3 +1,4 @@
 struct Auth: Codable {
-    let token: String
+    var token: String?
+    var user: User?
 }
