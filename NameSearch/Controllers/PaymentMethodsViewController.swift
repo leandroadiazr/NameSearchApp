@@ -11,7 +11,7 @@ class PaymentMethodsViewController: UIViewController {
     var delegate: PaymentMethodsViewControllerDelegate?
     let paymentNetworkManager   = PaymentsNetworkManager.shared
     var selectedPayment         : PaymentMethod?
-    var paymentMethods: [PaymentMethod] = []
+    var paymentMethods          : [PaymentMethod] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
