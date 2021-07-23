@@ -11,6 +11,7 @@ import Foundation
 class AuthNetworkManager {
     
     static let shared = AuthNetworkManager()
+    var userProfile: Auth?
 
     func authProcess<T: Codable>(with requestData: [String : String], withUrl urlString: String, for type: T.Type, completion: @escaping (Result<T?, CustomError>) -> Void) {
         

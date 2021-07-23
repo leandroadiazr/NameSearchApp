@@ -9,9 +9,9 @@ class CartViewController: UIViewController {
     @IBOutlet var payButton     : UIButton!
     @IBOutlet var tableView     : UITableView!
     
-    let paymentNetworkManager   = AuthNetworkManager.shared
+    let paymentNetworkManager   = PaymentsNetworkManager.shared
     var paymentsManager         : PaymentMethod?
-    var authManager             : Auth?
+    var authManager             = AuthNetworkManager.shared
     var domains: [Domain] = []
     
     @IBAction func payButtonTapped(_ sender: UIButton) {
@@ -66,13 +66,13 @@ class CartViewController: UIViewController {
     
     func performPayment(with urlString: String) {
         payButton.isEnabled = false
-        guard let authToken = authManager?.token, let paymentToken = paymentsManager?.token else { return }
-        let paymentMethod: [String: String] = [
+        guard let authToken = authManager.userProfile?.token, let paymentToken = paymentsManager?.token else { return }
+        let _: [String: String] = [
             "auth": authToken,
             "token": paymentToken
         ]
         showCustomLoadingView()
-        paymentNetworkManager.authProcess(with: paymentMethod, withUrl: urlString, for: PaymentMethod.self) { [weak self] result in
+        paymentNetworkManager.retreivePayments(with: StaticUrls.paymentMethodUrl, for: PaymentMethod.self) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(_):

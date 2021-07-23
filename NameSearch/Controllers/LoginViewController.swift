@@ -53,6 +53,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 guard let authResponse = authResponse else { return }
                 self.auth?.user = authResponse.user
                 self.auth?.token = authResponse.auth.token
+                self.authUserNetworkManager.userProfile = authResponse.auth
                 self.dismissLoadingView()
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showDomainSearch", sender: self)
